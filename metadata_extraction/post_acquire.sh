@@ -109,4 +109,21 @@ echo "$(date +"$DATESTR") - POST-ACQUISITION PROCESSING COMPLETED" >> "$LOG_LOCA
 
 ###########################################################
 
-#RUN META-DATA EXTRACTION
+# RUN META-DATA EXTRACTION
+# Optional: run a metadata-extraction / consolidation script after processing
+# (e.g. to gather instrument settings + notes into a spreadsheet next to the raw
+# data). Enable by setting METADATA_SCRIPT_LOCATION (and optionally METADATA_VENV,
+# which defaults to PYTHON_VENV) in the environment or above.
+METADATA_SCRIPT_LOCATION="${METADATA_SCRIPT_LOCATION:-}"
+METADATA_VENV="${METADATA_VENV:-$PYTHON_VENV}"
+
+if [ -n "$METADATA_SCRIPT_LOCATION" ]; then
+    echo "$(date +"$DATESTR") - Running metadata extraction: $METADATA_SCRIPT_LOCATION" >> "$LOG_LOCATION/log.txt"
+    "$METADATA_VENV" "$METADATA_SCRIPT_LOCATION" --host "$SRC_HOST" --log "$LOG_LOCATION/log.txt" --user "$USER" >> "$LOG_LOCATION/log.txt" 2>&1
+else
+    echo "$(date +"$DATESTR") - No metadata extraction script configured (set METADATA_SCRIPT_LOCATION to enable)" >> "$LOG_LOCATION/log.txt"
+fi
+
+echo "$(date +"$DATESTR") - POST-ACQUISITION WORKFLOW COMPLETED" >> "$LOG_LOCATION/log.txt"
+
+###########################################################

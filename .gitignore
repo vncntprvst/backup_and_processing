@@ -1,5 +1,20 @@
-# All __pycache__ directories
+# Python
 __pycache__/
-
-# Compiled Python files
 *.pyc
+
+# Secrets / credentials — never commit
+.env
+*token*.txt
+*access*.txt
+*.key
+# SyncBackPro profiles may embed server credentials — commit only a credential-free
+# template, never a profile saved with real passwords/hosts.
+# (data_sync.sps in this repo is a credential-free template.)
+
+# Logs / runtime
+*.log
+log.txt
+
+# OS
+.DS_Store
+Thumbs.db

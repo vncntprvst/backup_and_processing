@@ -5,11 +5,14 @@
 
 %#################################################################
 % APP CONSTANTS (DEFAULT)
-acquisition_path = "F:/Jacob/";
-filters_input_path = "F:/Jacob/"; %user-edit file
-output_path = "F:/Jacob/output/"; %recordings file written to this location
-
-template_input_path = "F:/Jacob/input_widefield.xlsx"; %Excel file to store summary [of all experiments]
+% Paths may be overridden via environment variables so this script does not
+% need to be edited per machine. Defaults below are examples. Override with:
+%   WF_ACQUISITION_PATH, WF_FILTERS_PATH, WF_OUTPUT_PATH, WF_TEMPLATE_XLSX
+default_root        = "F:/Jacob/";
+acquisition_path    = getenv_default("WF_ACQUISITION_PATH", default_root);
+filters_input_path  = getenv_default("WF_FILTERS_PATH", default_root); %user-edit file
+output_path         = getenv_default("WF_OUTPUT_PATH", default_root + "output/"); %recordings file written to this location
+template_input_path = getenv_default("WF_TEMPLATE_XLSX", default_root + "input_widefield.xlsx"); %Excel file to store summary [of all experiments]
 %#################################################################
 
 %PRE-PROCESSING / PREREQUISITES
@@ -314,5 +317,12 @@ function cleanName = sanitize_filename(name)
     maxLength = 255; % Maximum filename length in Windows
     if length(cleanName) > maxLength
         cleanName = cleanName(1:maxLength);
+    end
+end
+function val = getenv_default(name, default_val)
+    %GETENV_DEFAULT Return environment variable NAME, or DEFAULT_VAL if unset/empty.
+    val = string(getenv(name));
+    if strlength(val) == 0
+        val = string(default_val);
     end
 end

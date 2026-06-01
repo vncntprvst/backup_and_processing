@@ -2,7 +2,9 @@
 
 ## Overview
 The files in **backup-scripts** are intended to be installed on instrumentation/acquisition computers for regular/systematic backups to a local or remote server.
-Scripts in **post-acquisition** and **experiments_nwb** folders are useful for subsequent processing, such as submission to a computing cluster, NWB conversion prep.
+Scripts in **metadata_extraction** and **processing** (which contains **Remote** trigger scripts and **NWB** conversion-prep scripts) are useful for subsequent processing, such as submission to a computing cluster and NWB conversion prep.
+
+> Part of the U19 Data Science Core umbrella, [U19-data-management-and-processing](https://github.com/vncntprvst/U19-data-management-and-processing).
 
 ## Workflow
 The general workflow is as follows:
